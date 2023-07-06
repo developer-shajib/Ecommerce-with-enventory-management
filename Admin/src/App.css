@@ -1,0 +1,9 @@
+.dataTables_filter {
+  display: none;
+}
+
+div.dataTables_wrapper div.dataTables_paginate {
+  display: flex;
+  gap: 10px;
+  justify-content: end;
+}
