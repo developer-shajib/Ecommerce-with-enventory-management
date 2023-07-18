@@ -123,8 +123,14 @@ const Dashboard = () => {
 
                       <td>
                         <h2 className='table-avatar'>
-                          <a href='profile.html' className='avatar avatar-sm mr-2'>
-                            <img className='avatar-img' src={sp1} alt='Speciality' />
+                          <a
+                            href='profile.html'
+                            className='avatar avatar-sm mr-2'>
+                            <img
+                              className='avatar-img'
+                              src={sp1}
+                              alt='Speciality'
+                            />
                           </a>
                           <a href='profile.html'>Urology</a>
                         </h2>
@@ -135,11 +141,13 @@ const Dashboard = () => {
                           <a
                             className='btn btn-sm bg-success-light'
                             data-toggle='modal'
-                            href='#edit_specialities_details'
-                          >
+                            href='#edit_specialities_details'>
                             <i className='fe fe-pencil'></i> Edit
                           </a>
-                          <a data-toggle='modal' href='#delete_modal' className='btn btn-sm bg-danger-light'>
+                          <a
+                            data-toggle='modal'
+                            href='#delete_modal'
+                            className='btn btn-sm bg-danger-light'>
                             <i className='fe fe-trash'></i> Delete
                           </a>
                         </div>
@@ -150,8 +158,14 @@ const Dashboard = () => {
 
                       <td>
                         <h2 className='table-avatar'>
-                          <a href='profile.html' className='avatar avatar-sm mr-2'>
-                            <img className='avatar-img' src={sp1} alt='Speciality' />
+                          <a
+                            href='profile.html'
+                            className='avatar avatar-sm mr-2'>
+                            <img
+                              className='avatar-img'
+                              src={sp1}
+                              alt='Speciality'
+                            />
                           </a>
                           <a href='profile.html'>Brology</a>
                         </h2>
@@ -162,11 +176,13 @@ const Dashboard = () => {
                           <a
                             className='btn btn-sm bg-success-light'
                             data-toggle='modal'
-                            href='#edit_specialities_details'
-                          >
+                            href='#edit_specialities_details'>
                             <i className='fe fe-pencil'></i> Edit
                           </a>
-                          <a data-toggle='modal' href='#delete_modal' className='btn btn-sm bg-danger-light'>
+                          <a
+                            data-toggle='modal'
+                            href='#delete_modal'
+                            className='btn btn-sm bg-danger-light'>
                             <i className='fe fe-trash'></i> Delete
                           </a>
                         </div>
@@ -177,8 +193,14 @@ const Dashboard = () => {
 
                       <td>
                         <h2 className='table-avatar'>
-                          <a href='profile.html' className='avatar avatar-sm mr-2'>
-                            <img className='avatar-img' src={sp1} alt='Speciality' />
+                          <a
+                            href='profile.html'
+                            className='avatar avatar-sm mr-2'>
+                            <img
+                              className='avatar-img'
+                              src={sp1}
+                              alt='Speciality'
+                            />
                           </a>
                           <a href='profile.html'>Crology</a>
                         </h2>
@@ -189,11 +211,13 @@ const Dashboard = () => {
                           <a
                             className='btn btn-sm bg-success-light'
                             data-toggle='modal'
-                            href='#edit_specialities_details'
-                          >
+                            href='#edit_specialities_details'>
                             <i className='fe fe-pencil'></i> Edit
                           </a>
-                          <a data-toggle='modal' href='#delete_modal' className='btn btn-sm bg-danger-light'>
+                          <a
+                            data-toggle='modal'
+                            href='#delete_modal'
+                            className='btn btn-sm bg-danger-light'>
                             <i className='fe fe-trash'></i> Delete
                           </a>
                         </div>
@@ -204,8 +228,14 @@ const Dashboard = () => {
 
                       <td>
                         <h2 className='table-avatar'>
-                          <a href='profile.html' className='avatar avatar-sm mr-2'>
-                            <img className='avatar-img' src={sp1} alt='Speciality' />
+                          <a
+                            href='profile.html'
+                            className='avatar avatar-sm mr-2'>
+                            <img
+                              className='avatar-img'
+                              src={sp1}
+                              alt='Speciality'
+                            />
                           </a>
                           <a href='profile.html'>Urology</a>
                         </h2>
@@ -216,11 +246,13 @@ const Dashboard = () => {
                           <a
                             className='btn btn-sm bg-success-light'
                             data-toggle='modal'
-                            href='#edit_specialities_details'
-                          >
+                            href='#edit_specialities_details'>
                             <i className='fe fe-pencil'></i> Edit
                           </a>
-                          <a data-toggle='modal' href='#delete_modal' className='btn btn-sm bg-danger-light'>
+                          <a
+                            data-toggle='modal'
+                            href='#delete_modal'
+                            className='btn btn-sm bg-danger-light'>
                             <i className='fe fe-trash'></i> Delete
                           </a>
                         </div>
