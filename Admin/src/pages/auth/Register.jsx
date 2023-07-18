@@ -1,6 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import registerLogo from '../../assets/img/logo-white.png';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { register } from '../../features/auth/authApiSlice.jsx';
+import {
+  getAllAuthData,
+  setMessageEmpty
+} from '../../features/auth/authSlice.jsx';
+import { createToast } from '../../utils/toastify.js';
 
 const Register = () => {
   const [input, setInput] = useState({
@@ -9,6 +16,9 @@ const Register = () => {
     password: '',
     confirmPassword: ''
   });
+  const dispatch = useDispatch();
+  const { error, message } = useSelector(getAllAuthData);
+  const navigate = useNavigate();
 
   // <!-- Handle Input Change -->
   const handleInputChange = (e) => {
@@ -17,6 +27,47 @@ const Register = () => {
       [e.target.name]: e.target.value
     }));
   };
+
+  // <!-- Handle Form Submit -->
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    // <!-- Form Validation -->
+    if (
+      !input.name ||
+      !input.email ||
+      !input.password ||
+      !input.confirmPassword
+    ) {
+      createToast('All fields are required', 'warning');
+    } else if (input.password !== input.confirmPassword) {
+      createToast(' Password not match', 'warning');
+    } else {
+      dispatch(
+        register({
+          name: input.name,
+          email: input.email,
+          password: input.password
+        })
+      );
+
+      // setInput({ name: '', email: '', password: '', confirmPassword: '' });
+    }
+  };
+
+  useEffect(() => {
+    if (error) {
+      createToast(error);
+    }
+
+    if (message) {
+      navigate('/login');
+      createToast(message, 'success');
+      setInput({ name: '', email: '', password: '', confirmPassword: '' });
+    }
+
+    dispatch(setMessageEmpty());
+  }, [error, message, dispatch, navigate]);
 
   return (
     <>
@@ -34,7 +85,7 @@ const Register = () => {
                   <p className='account-subtitle'>Access to our dashboard</p>
 
                   {/* <!-- Form --> */}
-                  <form action='https://dreamguys.co.in/demo/doccure/admin/login.html'>
+                  <form onSubmit={handleFormSubmit}>
                     <div className='form-group'>
                       <input
                         className='form-control'
