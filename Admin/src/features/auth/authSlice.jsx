@@ -2,7 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 
 // <!-- Initial State -->
 const initialState = {
-  user: {}
+  user: null,
+  isLoading: false,
+  isSuccess: false,
+  error: false,
+  message: ''
 };
 
 // <!-- create auth slice -->
