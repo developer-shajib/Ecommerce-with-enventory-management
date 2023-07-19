@@ -42,13 +42,15 @@ const Login = () => {
     }
 
     if (message) {
-      navigate('/');
       createToast(message, 'success');
       setInput({ name: '', email: '', password: '', confirmPassword: '' });
     }
+    if (user) {
+      navigate('/');
+    }
 
     dispatch(setMessageEmpty());
-  }, [error, message, dispatch, navigate]);
+  }, [error, message, dispatch, navigate, user]);
 
   return (
     <>

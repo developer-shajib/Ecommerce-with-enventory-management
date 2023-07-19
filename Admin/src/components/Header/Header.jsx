@@ -2,14 +2,26 @@ import logo from '../../assets/img/logo.png';
 import avatar from '../../assets/img/doctors/doctor-thumb-01.jpg';
 import notiAvatar from '../../assets/img/doctors/doctor-thumb-01.jpg';
 import useDropdownPopup from '../../hooks/useDropdownPopup.jsx';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../features/auth/authApiSlice.jsx';
+import { setMessageEmpty } from '../../features/auth/authSlice.jsx';
 
 const Header = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { isOpen, toggleMenu, dropDownRef } = useDropdownPopup();
   const {
     isOpen: isNotification,
     toggleMenu: notificationMenu,
     dropDownRef: notificationRef
   } = useDropdownPopup();
+
+  // <!-- Handle User Logout -->
+  const handleLogout = (e) => {
+    e.preventDefault();
+    dispatch(logout());
+  };
 
   return (
     <>
@@ -221,7 +233,7 @@ const Header = () => {
                 <a className='dropdown-item' href='settings.html'>
                   Settings
                 </a>
-                <a className='dropdown-item' href='login.html'>
+                <a href='#' onClick={handleLogout} className='dropdown-item'>
                   Logout
                 </a>
               </div>

@@ -28,3 +28,17 @@ export const login = createAsyncThunk('auth/login', async (data) => {
     throw new Error(error.response.data.message);
   }
 });
+
+// <!-- Logout User -->
+export const logout = createAsyncThunk('auth/logout', async () => {
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URI}/api/v1/auth/logout`,
+      {},
+      { withCredentials: true }
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+});
