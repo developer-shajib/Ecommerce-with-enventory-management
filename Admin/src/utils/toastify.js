@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 export const createToast = (msg = '', type = 'error') => {
   toast(msg, {
-    position: 'top-right',
+    position: 'top-center',
     type,
     autoClose: 5000,
     hideProgressBar: false,

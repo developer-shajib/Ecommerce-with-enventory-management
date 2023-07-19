@@ -1,12 +1,22 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logoWhite from '../../assets/img/logo-white.png';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { createToast } from '../../utils/toastify.js';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getAllAuthData,
+  setMessageEmpty
+} from '../../features/auth/authSlice.jsx';
+import { login } from '../../features/auth/authApiSlice.jsx';
 
 const Login = () => {
   const [input, setInput] = useState({
     email: '',
     password: ''
   });
+  const dispatch = useDispatch();
+  const { message, error, user } = useSelector(getAllAuthData);
+  const navigate = useNavigate();
 
   // <!-- Handle Input Change -->
   const handleInputChange = (e) => {
@@ -15,6 +25,30 @@ const Login = () => {
       [e.target.name]: e.target.value
     }));
   };
+
+  // <!-- Handle Form Submit -->
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    if (!input.email || !input.password)
+      return createToast('Fields are required');
+
+    dispatch(login(input));
+  };
+
+  useEffect(() => {
+    if (error) {
+      createToast(error);
+    }
+
+    if (message) {
+      navigate('/');
+      createToast(message, 'success');
+      setInput({ name: '', email: '', password: '', confirmPassword: '' });
+    }
+
+    dispatch(setMessageEmpty());
+  }, [error, message, dispatch, navigate]);
 
   return (
     <>
@@ -32,7 +66,7 @@ const Login = () => {
                   <p className='account-subtitle'>Access to our dashboard</p>
 
                   {/* <!-- Form --> */}
-                  <form action='https://dreamguys.co.in/demo/doccure/admin/index.html'>
+                  <form onSubmit={handleFormSubmit}>
                     <div className='form-group'>
                       <input
                         className='form-control'

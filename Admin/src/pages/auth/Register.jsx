@@ -50,8 +50,6 @@ const Register = () => {
           password: input.password
         })
       );
-
-      // setInput({ name: '', email: '', password: '', confirmPassword: '' });
     }
   };
 

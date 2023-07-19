@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { register } from './authApiSlice.jsx';
+import { login, register } from './authApiSlice.jsx';
 
 // <!-- Initial State -->
 const initialState = {
@@ -20,7 +20,9 @@ const authSlice = createSlice({
     }
   },
   extraReducers: (build) => {
-    build.addCase(register.pending, (state, action) => {
+    // <!-- Register Api -->
+
+    build.addCase(register.pending, (state) => {
       state.isLoading = true;
     }),
       build.addCase(register.fulfilled, (state, action) => {
@@ -28,6 +30,20 @@ const authSlice = createSlice({
         state.isLoading = false;
       }),
       build.addCase(register.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.isLoading = false;
+      }),
+      // <!-- Login Api -->
+
+      build.addCase(login.pending, (state) => {
+        state.isLoading = true;
+      }),
+      build.addCase(login.fulfilled, (state, action) => {
+        state.message = action.payload.message;
+        state.user = action.payload.user;
+        state.isLoading = false;
+      }),
+      build.addCase(login.rejected, (state, action) => {
         state.error = action.error.message;
         state.isLoading = false;
       });
