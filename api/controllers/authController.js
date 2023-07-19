@@ -14,7 +14,8 @@ export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   // validation
-  if (!email || !password) return res.status(400).json({ message: 'All fields are required' });
+  if (!email || !password)
+    return res.status(400).json({ message: 'All fields are required' });
 
   // find login user
   const loginUser = await User.findOne({ email });
@@ -29,17 +30,34 @@ export const login = asyncHandler(async (req, res) => {
   }
 
   // create access token
-  const token = jwt.sign({ email: loginUser.email }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: process.env.ACCESS_TOKEN_EXPIRE_IN,
-  });
+  const token = jwt.sign(
+    { email: loginUser.email },
+    process.env.ACCESS_TOKEN_SECRET,
+    {
+      expiresIn: process.env.ACCESS_TOKEN_EXPIRE_IN
+    }
+  );
 
   // create refresh token
-  const refreshToken = jwt.sign({ email: loginUser.email }, process.env.REFRESH_TOKEN_SECRET, {
-    expiresIn: process.env.REFRESH_TOKEN_EXPIRE_IN,
-  });
+  const refreshToken = jwt.sign(
+    { email: loginUser.email },
+    process.env.REFRESH_TOKEN_SECRET,
+    {
+      expiresIn: process.env.REFRESH_TOKEN_EXPIRE_IN
+    }
+  );
 
   // response login user token
-  res.status(200).cookie('accessToken', token).json({ token, user: loginUser });
+  res
+    .status(200)
+    .cookie('accessToken', token, {
+      httpOnly: true,
+      secure: process.env.APP_ENV === 'Development' ? false : true,
+      sameSite: 'strict',
+      path: '/',
+      maxAge: 7 * 24 * 60 * 60 * 1000
+    })
+    .json({ token, user: loginUser, message: 'Login Successful' });
 });
 
 /**
@@ -60,7 +78,8 @@ export const register = asyncHandler(async (req, res) => {
   // email check
   const emailCheck = await User.findOne({ email });
 
-  if (emailCheck) return res.status(400).json({ message: 'Email already exists' });
+  if (emailCheck)
+    return res.status(400).json({ message: 'Email already exists' });
 
   // hash password
   const hashPass = await bcrypt.hash(password, 10);
@@ -68,10 +87,10 @@ export const register = asyncHandler(async (req, res) => {
   const user = await User.create({
     name,
     email,
-    password: hashPass,
+    password: hashPass
   });
 
-  res.status(200).json(user);
+  res.status(200).json({ user, message: 'Register Successful' });
 });
 
 /**
@@ -81,5 +100,18 @@ export const register = asyncHandler(async (req, res) => {
  * @access public
  */
 export const logout = asyncHandler(async (req, res) => {
-  res.status(200).clearCookie('accessToken').json({ message: 'Logout successful' });
+  res
+    .status(200)
+    .clearCookie('accessToken')
+    .json({ message: 'Logout successful' });
+});
+
+/**
+ * @DESC Logged In user
+ * @ROUTE /api/v1/auth/me
+ * @method get
+ * @access public
+ */
+export const loggedInUser = asyncHandler(async (req, res) => {
+  res.status(200).json({ user: req.me, message: 'Logged In User' });
 });
