@@ -1,26 +1,28 @@
 import { useEffect } from 'react';
 import sp1 from '../../assets/img/specialities/specialities-01.png';
 import DataTable from 'datatables.net-dt';
+import { useSelector } from 'react-redux';
+import { getAllAuthData } from '../../features/auth/authSlice.jsx';
+import { createToast } from '../../utils/toastify.js';
+import PageHeader from '../../components/PageHeader/PageHeader.jsx';
 
 const Dashboard = () => {
+  const { message } = useSelector(getAllAuthData);
+
   useEffect(() => {
+    if (message) {
+      createToast('Login Successful', 'success');
+    }
+
     new DataTable('.datatable');
-  }, []);
+  }, [message]);
 
   return (
     <>
       {/* <!-- Page Header --> */}
-      <div className='page-header'>
-        <div className='row'>
-          <div className='col-sm-12'>
-            <h3 className='page-title'>Welcome Admin!</h3>
-            <ul className='breadcrumb'>
-              <li className='breadcrumb-item active'>Dashboard</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+      <PageHeader title='Dashboard' />
       {/* <!-- /Page Header --> */}
+
       <div className='row'>
         <div className='col-xl-3 col-sm-6 col-12'>
           <div className='card'>

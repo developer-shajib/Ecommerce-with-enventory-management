@@ -4,7 +4,7 @@ import ModalPopup from '../../components/ModalPopup/ModalPopup.jsx';
 import DataTable from 'datatables.net-dt';
 import PageHeader from '../../components/PageHeader/PageHeader.jsx';
 
-const User = () => {
+const Permission = () => {
   useEffect(() => {
     new DataTable('.datatable');
   }, []);
@@ -13,8 +13,8 @@ const User = () => {
     <>
       {/* <!-- Modal --> */}
       <ModalPopup
-        title='Add New User'
-        target='userModalPopup'>
+        title='Add New Permission'
+        target='permissionModalPopup'>
         <p>
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo eaque amet excepturi asperiores est, nisi ex harum delectus numquam accusamus beatae odio nobis nulla voluptas culpa laboriosam rem quae atque dignissimos laudantium quisquam.
           Atque sint dolore est! Saepe odit incidunt, tempore, velit sint nesciunt recusandae delectus accusamus modi illo amet labore minima beatae. Molestiae et maxime aperiam inventore, doloremque nemo delectus sunt nisi corporis corrupti iste
@@ -24,13 +24,13 @@ const User = () => {
       </ModalPopup>
 
       {/* <!-- Page Header --> */}
-      <PageHeader title='User' />
+      <PageHeader title='Permission' />
       {/* <!-- /Page Header --> */}
 
       <div className='row'>
         <div className='col-md-12'>
           <button
-            data-target='#userModalPopup'
+            data-target='#permissionModalPopup'
             data-toggle='modal'
             className='btn btn-success mb-3'>
             Add New
@@ -60,7 +60,7 @@ const User = () => {
                             <img
                               className='avatar-img rounded-circle'
                               src={doctorAvatar}
-                              alt='User Image'
+                              alt='Permission Image'
                             />
                           </a>
                           <a href='profile.html'>Dra. Ruby Perrin</a>
@@ -75,7 +75,7 @@ const User = () => {
                             <img
                               className='avatar-img rounded-circle'
                               src={doctorAvatar}
-                              alt='User Image'
+                              alt='Permission Image'
                             />
                           </a>
                           <a href='profile.html'>Charlene Reed </a>
@@ -110,7 +110,7 @@ const User = () => {
                             <img
                               className='avatar-img rounded-circle'
                               src={doctorAvatar}
-                              alt='User Image'
+                              alt='Permission Image'
                             />
                           </a>
                           <a href='profile.html'>Dr. Ruby Perrin</a>
@@ -125,7 +125,7 @@ const User = () => {
                             <img
                               className='avatar-img rounded-circle'
                               src={doctorAvatar}
-                              alt='User Image'
+                              alt='Permission Image'
                             />
                           </a>
                           <a href='profile.html'>Charlene Reed </a>
@@ -160,7 +160,7 @@ const User = () => {
                             <img
                               className='avatar-img rounded-circle'
                               src={doctorAvatar}
-                              alt='User Image'
+                              alt='Permission Image'
                             />
                           </a>
                           <a href='profile.html'>Dr. Ruby Perrin</a>
@@ -175,7 +175,7 @@ const User = () => {
                             <img
                               className='avatar-img rounded-circle'
                               src={doctorAvatar}
-                              alt='User Image'
+                              alt='Permission Image'
                             />
                           </a>
                           <a href='profile.html'>Charlene Reed </a>
@@ -210,7 +210,7 @@ const User = () => {
                             <img
                               className='avatar-img rounded-circle'
                               src={doctorAvatar}
-                              alt='User Image'
+                              alt='Permission Image'
                             />
                           </a>
                           <a href='profile.html'>Dr. Ruby Perrin</a>
@@ -225,7 +225,7 @@ const User = () => {
                             <img
                               className='avatar-img rounded-circle'
                               src={doctorAvatar}
-                              alt='User Image'
+                              alt='Permission Image'
                             />
                           </a>
                           <a href='profile.html'>Charlene Reed </a>
@@ -263,4 +263,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default Permission;

@@ -3,10 +3,7 @@ import registerLogo from '../../assets/img/logo-white.png';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../features/auth/authApiSlice.jsx';
-import {
-  getAllAuthData,
-  setMessageEmpty
-} from '../../features/auth/authSlice.jsx';
+import { getAllAuthData, setMessageEmpty } from '../../features/auth/authSlice.jsx';
 import { createToast } from '../../utils/toastify.js';
 
 const Register = () => {
@@ -33,12 +30,7 @@ const Register = () => {
     e.preventDefault();
 
     // <!-- Form Validation -->
-    if (
-      !input.name ||
-      !input.email ||
-      !input.password ||
-      !input.confirmPassword
-    ) {
+    if (!input.name || !input.email || !input.password || !input.confirmPassword) {
       createToast('All fields are required', 'warning');
     } else if (input.password !== input.confirmPassword) {
       createToast(' Password not match', 'warning');
@@ -56,15 +48,15 @@ const Register = () => {
   useEffect(() => {
     if (error) {
       createToast(error);
+      dispatch(setMessageEmpty());
     }
 
     if (message) {
       navigate('/login');
       createToast(message, 'success');
       setInput({ name: '', email: '', password: '', confirmPassword: '' });
+      dispatch(setMessageEmpty());
     }
-
-    dispatch(setMessageEmpty());
   }, [error, message, dispatch, navigate]);
 
   return (
@@ -75,7 +67,11 @@ const Register = () => {
           <div className='container'>
             <div className='loginbox'>
               <div className='login-left'>
-                <img className='img-fluid' src={registerLogo} alt='Logo' />
+                <img
+                  className='img-fluid'
+                  src={registerLogo}
+                  alt='Logo'
+                />
               </div>
               <div className='login-right'>
                 <div className='login-right-wrap'>

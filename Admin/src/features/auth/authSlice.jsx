@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { login, logout, register } from './authApiSlice.jsx';
+import { loggedInUser, login, logout, register } from './authApiSlice.jsx';
 
 // <!-- Initial State -->
 const initialState = {
-  user: null,
+  user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null,
   isLoading: false,
   message: '',
   error: ''
@@ -21,44 +21,64 @@ const authSlice = createSlice({
   },
   extraReducers: (build) => {
     // <!-- Register Api -->
-
-    build.addCase(register.pending, (state) => {
-      state.isLoading = true;
-    }),
-      build.addCase(register.fulfilled, (state, action) => {
+    build
+      .addCase(register.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(register.fulfilled, (state, action) => {
         state.message = action.payload.message;
         state.isLoading = false;
-      }),
-      build.addCase(register.rejected, (state, action) => {
+      })
+      .addCase(register.rejected, (state, action) => {
         state.error = action.error.message;
         state.isLoading = false;
-      }),
+      })
       // <!-- Login Api -->
 
-      build.addCase(login.pending, (state) => {
+      .addCase(login.pending, (state) => {
         state.isLoading = true;
-      }),
-      build.addCase(login.fulfilled, (state, action) => {
-        state.message = action.payload.message;
+      })
+      .addCase(login.fulfilled, (state, action) => {
         state.user = action.payload.user;
+        localStorage.setItem('user', JSON.stringify(action.payload.user));
+        state.message = action.payload.message;
         state.isLoading = false;
-      }),
-      build.addCase(login.rejected, (state, action) => {
+      })
+      .addCase(login.rejected, (state, action) => {
         state.error = action.error.message;
         state.isLoading = false;
-      });
+      })
 
-    // <!-- Logout Api -->
-    build.addCase(logout.fulfilled, (state, action) => {
-      state.user = null;
-      state.message = action.payload.message;
-      state.isLoading = false;
-      state.error = false;
-    }),
-      build.addCase(logout.rejected, (state, action) => {
+      // <!-- Logout Api -->
+      .addCase(logout.fulfilled, (state, action) => {
+        state.user = null;
+        localStorage.removeItem('user');
+        state.message = action.payload.message;
+        state.isLoading = false;
+        state.error = false;
+      })
+      .addCase(logout.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
         state.message = false;
+      })
+
+      // <!-- LoggedIn User -->
+      .addCase(loggedInUser.pending, (state) => {
+        state.isLoading = true;
+        state.message = '';
+        state.error = '';
+      })
+      .addCase(loggedInUser.fulfilled, (state, action) => {
+        // state.user = action.payload.user;
+        state.isLoading = false;
+        localStorage.setItem('user', JSON.stringify(action.payload.user));
+      })
+      .addCase(loggedInUser.rejected, (state) => {
+        localStorage.removeItem('user');
+        state.user = null;
+        state.error = false;
+        state.isLoading = false;
       });
   }
 });

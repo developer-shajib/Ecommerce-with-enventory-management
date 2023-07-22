@@ -10,7 +10,11 @@ const Forgot = () => {
           <div className='container'>
             <div className='loginbox'>
               <div className='login-left'>
-                <img className='img-fluid' src={logoWhite} alt='Logo' />
+                <img
+                  className='img-fluid'
+                  src={logoWhite}
+                  alt='Logo'
+                />
               </div>
               <div className='login-right'>
                 <div className='login-right-wrap'>
@@ -19,11 +23,17 @@ const Forgot = () => {
                   {/* <!-- Form --> */}
                   <form action='https://dreamguys.co.in/demo/doccure/admin/index.html'>
                     <div className='form-group'>
-                      <input className='form-control' type='text' placeholder='Email' />
+                      <input
+                        className='form-control'
+                        type='text'
+                        placeholder='Email'
+                      />
                     </div>
 
                     <div className='form-group'>
-                      <button className='btn btn-primary btn-block' type='submit'>
+                      <button
+                        className='btn btn-primary btn-block'
+                        type='submit'>
                         Send
                       </button>
                     </div>

@@ -3,10 +3,7 @@ import logoWhite from '../../assets/img/logo-white.png';
 import { useEffect, useState } from 'react';
 import { createToast } from '../../utils/toastify.js';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  getAllAuthData,
-  setMessageEmpty
-} from '../../features/auth/authSlice.jsx';
+import { getAllAuthData, setMessageEmpty } from '../../features/auth/authSlice.jsx';
 import { login } from '../../features/auth/authApiSlice.jsx';
 
 const Login = () => {
@@ -30,8 +27,7 @@ const Login = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    if (!input.email || !input.password)
-      return createToast('Fields are required');
+    if (!input.email || !input.password) return createToast('Fields are required');
 
     dispatch(login(input));
   };
@@ -39,17 +35,14 @@ const Login = () => {
   useEffect(() => {
     if (error) {
       createToast(error);
+      dispatch(setMessageEmpty());
     }
 
     if (message) {
       createToast(message, 'success');
+      dispatch(setMessageEmpty());
       setInput({ name: '', email: '', password: '', confirmPassword: '' });
     }
-    if (user) {
-      navigate('/');
-    }
-
-    dispatch(setMessageEmpty());
   }, [error, message, dispatch, navigate, user]);
 
   return (
@@ -60,7 +53,11 @@ const Login = () => {
           <div className='container'>
             <div className='loginbox'>
               <div className='login-left'>
-                <img className='img-fluid' src={logoWhite} alt='Logo' />
+                <img
+                  className='img-fluid'
+                  src={logoWhite}
+                  alt='Logo'
+                />
               </div>
               <div className='login-right'>
                 <div className='login-right-wrap'>
