@@ -27,7 +27,7 @@ const Login = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    if (!input.email || !input.password) return createToast('Fields are required');
+    if (!input.email || !input.password) return createToast('Fields are required', 'warning');
 
     dispatch(login(input));
   };

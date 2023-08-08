@@ -35,7 +35,29 @@ export const logout = createAsyncThunk('auth/logout', async () => {
 // <!-- Logged In User -->
 export const loggedInUser = createAsyncThunk('auth/loggedInUser', async () => {
   try {
-    const response = await axios.get('http://localhost:5050/api/v1/auth/me', { withCredentials: true });
+    const response = await axios.get(`${import.meta.env.VITE_API_URI}/api/v1/auth/me`, { withCredentials: true });
+
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+});
+
+// <!-- Forget Password -->
+export const forgetPassword = createAsyncThunk('auth/forgetPassword', async (email) => {
+  try {
+    const response = await axios.post(`${import.meta.env.VITE_API_URI}/api/v1/auth/forget`, { email });
+
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+});
+
+// <!-- Verify check to access reset page  -->
+export const getForTokenVerify = createAsyncThunk('auth/getForTokenVerify', async (id, token) => {
+  try {
+    const response = await axios.get(`${import.meta.env.VITE_API_URI}/api/v1/auth/forget/${token}/${id}`);
 
     return response.data;
   } catch (error) {

@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { loggedInUser } from './features/auth/authApiSlice.jsx';
 import { setMessageEmpty } from './features/auth/authSlice.jsx';
+import { fetchAllPermission, fetchAllRole, fetchAllUser } from './features/user/userApiSlice.jsx';
 
 function App() {
   const dispatch = useDispatch();
@@ -14,9 +15,13 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem('user')) {
       dispatch(loggedInUser());
-      setMessageEmpty();
+      dispatch(fetchAllPermission());
+      dispatch(fetchAllRole());
+      dispatch(setMessageEmpty());
+      dispatch(fetchAllUser());
     }
   }, [dispatch]);
+
   return (
     <>
       <ToastContainer />

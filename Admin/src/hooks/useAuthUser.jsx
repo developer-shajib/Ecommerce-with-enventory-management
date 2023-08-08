@@ -2,9 +2,9 @@ import { useSelector } from 'react-redux';
 import { getAllAuthData } from '../features/auth/authSlice.jsx';
 
 const useAuthUser = () => {
-  const { user } = useSelector(getAllAuthData);
+  const { user, isLoading, error, message } = useSelector(getAllAuthData);
 
-  return { user };
+  return { user, isLoading, error, message };
 };
 
 export default useAuthUser;

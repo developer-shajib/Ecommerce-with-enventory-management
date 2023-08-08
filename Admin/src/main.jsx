@@ -9,6 +9,7 @@ import './assets/plugins/datatables/datatables.min.css';
 import './assets/css/style.css';
 import store from './app/store.js';
 import { Provider } from 'react-redux';
+import 'react-loading-skeleton/dist/skeleton.css';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(

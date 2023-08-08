@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loggedInUser, login, logout, register } from './authApiSlice.jsx';
+import { forgetPassword, getForTokenVerify, loggedInUser, login, logout, register } from './authApiSlice.jsx';
 
 // <!-- Initial State -->
 const initialState = {
@@ -33,6 +33,7 @@ const authSlice = createSlice({
         state.error = action.error.message;
         state.isLoading = false;
       })
+
       // <!-- Login Api -->
 
       .addCase(login.pending, (state) => {
@@ -70,7 +71,7 @@ const authSlice = createSlice({
         state.error = '';
       })
       .addCase(loggedInUser.fulfilled, (state, action) => {
-        // state.user = action.payload.user;
+        state.user = action.payload.user;
         state.isLoading = false;
         localStorage.setItem('user', JSON.stringify(action.payload.user));
       })
@@ -78,6 +79,36 @@ const authSlice = createSlice({
         localStorage.removeItem('user');
         state.user = null;
         state.error = false;
+        state.isLoading = false;
+      })
+
+      // <!-- Forget password -->
+      .addCase(forgetPassword.pending, (state) => {
+        state.isLoading = true;
+        state.message = '';
+        state.error = '';
+      })
+      .addCase(forgetPassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.message = 'Email Sent Successful';
+      })
+      .addCase(forgetPassword.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.isLoading = false;
+      })
+
+      // <!-- get req for access reset page  -->
+      .addCase(getForTokenVerify.pending, (state) => {
+        state.isLoading = true;
+        state.message = '';
+        state.error = '';
+      })
+      .addCase(getForTokenVerify.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(getForTokenVerify.rejected, (state, action) => {
+        state.error = action.error.message;
         state.isLoading = false;
       });
   }

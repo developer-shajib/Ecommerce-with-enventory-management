@@ -6,7 +6,8 @@ const useDropdownPopup = () => {
   const dropDownRef = useRef(null);
 
   // Toggle Menu
-  const toggleMenu = () => {
+  const toggleMenu = (e) => {
+    e.preventDefault();
     setIsOpen(!isOpen);
   };
 

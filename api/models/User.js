@@ -1,51 +1,56 @@
-import mongoose from 'mongoose';
+import mongoose, { mongo } from 'mongoose';
 
 const userSchema = mongoose.Schema(
   {
     name: {
       type: String,
       trim: true,
-      required: true,
+      required: true
     },
     email: {
       type: String,
       trim: true,
-      required: true,
+      required: true
     },
     mobile: {
       type: String,
       trim: true,
-      default: null,
+      default: null
     },
     password: {
       type: String,
       trim: true,
-      required: true,
+      required: true
     },
     gender: {
       type: String,
       enum: ['Male', 'Female', 'Other', null],
-      default: null,
+      default: null
     },
     role: {
-      type: String,
-      default: 'Author',
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Role',
+      required: true
     },
     photo: {
       type: String,
-      default: null,
+      default: null
+    },
+    token: {
+      type: String,
+      default: null
     },
     status: {
       type: Boolean,
-      default: true,
+      default: true
     },
     trash: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 

@@ -1,6 +1,6 @@
 import logo from '../../assets/img/logo.png';
-import avatar from '../../assets/img/doctors/doctor-thumb-01.jpg';
-import notiAvatar from '../../assets/img/doctors/doctor-thumb-01.jpg';
+// import avatar from '../../assets/img/doctors/doctor-thumb-01.jpg';
+import avatar from '../../assets/avatar.webp';
 import useDropdownPopup from '../../hooks/useDropdownPopup.jsx';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../features/auth/authApiSlice.jsx';
@@ -107,7 +107,7 @@ const Header = () => {
                             <img
                               className='avatar-img rounded-circle'
                               alt='User Image'
-                              src={notiAvatar}
+                              src={avatar}
                             />
                           </span>
                           <div className='media-body'>
@@ -128,7 +128,7 @@ const Header = () => {
                             <img
                               className='avatar-img rounded-circle'
                               alt='User Image'
-                              src={notiAvatar}
+                              src={avatar}
                             />
                           </span>
                           <div className='media-body'>
@@ -149,7 +149,7 @@ const Header = () => {
                             <img
                               className='avatar-img rounded-circle'
                               alt='User Image'
-                              src={notiAvatar}
+                              src={avatar}
                             />
                           </span>
                           <div className='media-body'>
@@ -170,7 +170,7 @@ const Header = () => {
                             <img
                               className='avatar-img rounded-circle'
                               alt='User Image'
-                              src={notiAvatar}
+                              src={avatar}
                             />
                           </span>
                           <div className='media-body'>
@@ -199,13 +199,14 @@ const Header = () => {
             ref={dropDownRef}
             className='nav-item dropdown has-arrow'>
             <a
-              href='#'
+              href=''
               className=' nav-link'
               onClick={toggleMenu}>
               <span className='user-img'>
                 <img
+                  style={{ width: '30px', height: '30px' }}
                   className='rounded-circle'
-                  src={user?.photo ? user?.photo : notiAvatar}
+                  src={user?.photo ? user?.photo : avatar}
                   alt={user?.name}
                   width='31'
                 />
@@ -219,14 +220,14 @@ const Header = () => {
                 <div className='user-header'>
                   <div className='avatar avatar-sm'>
                     <img
-                      src={user?.photo ? user?.photo : notiAvatar}
+                      src={user?.photo ? user?.photo : avatar}
                       alt={user?.name}
                       className='avatar-img rounded-circle'
                     />
                   </div>
                   <div className='user-text'>
                     <h6>{user?.name}</h6>
-                    <p className='text-muted mb-0'>{user?.role}</p>
+                    <p className='text-muted mb-0'>{user?.role?.name}</p>
                   </div>
                 </div>
                 <a

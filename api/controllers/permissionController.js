@@ -12,10 +12,6 @@ import createSlug from '../helpers/slug.js';
 export const getAllPermission = asyncHandler(async (req, res) => {
   const permissions = await Permission.find();
 
-  if (permissions.length === 0) {
-    return res.status(404).json({ message: 'Permission data not found' });
-  }
-
   res.status(200).json({ permissions, message: 'Fetch all permission data success' });
 });
 
@@ -34,7 +30,7 @@ export const getSinglePermission = asyncHandler(async (req, res) => {
     return res.status(404).json({ message: 'Permission data not found' });
   }
 
-  res.status(200).json({ permission, message: 'Fetch permission data success' });
+  res.status(200).json({ permission, message: 'Fetch all permission data success' });
 });
 
 /**
@@ -55,7 +51,7 @@ export const createPermission = asyncHandler(async (req, res) => {
   // permission check
   const checkPermission = await Permission.findOne({ name });
 
-  if (checkPermission) return res.status(400).json({ message: 'Permission name already exist!' });
+  if (checkPermission) return res.status(400).json({ message: 'This permission already exist!' });
 
   // create new permission
   const permission = await Permission.create({
@@ -63,7 +59,7 @@ export const createPermission = asyncHandler(async (req, res) => {
     slug: createSlug(name)
   });
 
-  res.status(200).json({ permission, message: 'Permission create success' });
+  res.status(200).json({ permission, message: 'New permission create success' });
 });
 
 /**
@@ -75,9 +71,13 @@ export const createPermission = asyncHandler(async (req, res) => {
 export const deletePermission = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
+  const isUser = await Permission.findById(id);
+
+  if (!isUser) return res.status(404).json({ message: 'This permission not found' });
+
   const permission = await Permission.findByIdAndDelete(id);
 
-  res.status(200).json({ permission, message: 'Permission delete successfully' });
+  res.status(200).json({ permission, message: 'Permission delete successful' });
 });
 
 /**
@@ -89,20 +89,28 @@ export const deletePermission = asyncHandler(async (req, res) => {
 export const updatePermission = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
-  const { name } = req.body;
+  const data = await Permission.findById(id);
 
-  if (!name) {
-    return res.status(400).json({ message: 'Permission name is required' });
+  if (!data) {
+    return res.status(404).json({ message: 'Permission not found!' });
+  }
+
+  let status = data.status;
+  if (req.body.status === true) {
+    status = true;
+  } else if (req.body.status === false) {
+    status = false;
   }
 
   const permission = await Permission.findByIdAndUpdate(
-    id,
+    data._id,
     {
-      name,
-      slug: createSlug(name)
+      name: req.body.name ? req.body.name : data.name,
+      slug: req.body.name ? createSlug(req.body.name) : data.slug,
+      status
     },
     { new: true }
   );
 
-  res.status(200).json(permission);
+  res.status(200).json({ permission, message: `Permission update success.` });
 });

@@ -46,14 +46,13 @@ Version      : 1.0
   font-style: normal;
   font-weight: 400;
   src: url(../fonts/MaterialIcons-Regular.eot); /* For IE6-8 */
-  src: local('Material Icons'), local('MaterialIcons-Regular'), url(../fonts/MaterialIcons-Regular.html) format('woff2'),
-    url(../fonts/MaterialIcons-Regular.woff) format('woff'), url(../fonts/MaterialIcons-Regular.ttf) format('truetype');
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url(../fonts/MaterialIcons-Regular.html) format('woff2'), url(../fonts/MaterialIcons-Regular.woff) format('woff'), url(../fonts/MaterialIcons-Regular.ttf) format('truetype');
 }
 html {
   height: 100%;
 }
 body {
-  background-color: #f8f9fa;
+  background: #ff90bb;
   color: #333;
   font-family: 'Mada', sans-serif;
   font-size: 1rem;
@@ -1080,8 +1079,8 @@ button.bg-danger:hover {
 .nav-tabs.nav-tabs-solid > li > a.active,
 .nav-tabs.nav-tabs-solid > li > a.active:hover,
 .nav-tabs.nav-tabs-solid > li > a.active:focus {
-  background-color: #00d0f1;
-  border-color: #00d0f1;
+  background-color: #ff90bb;
+  border-color: #ff90bb;
   color: #fff;
 }
 .nav-tabs.nav-tabs-solid.nav-tabs-rounded {
@@ -1471,7 +1470,7 @@ button.bg-danger:hover {
   z-index: 99;
 }
 .user-menu.nav > li > a {
-  color: #333;
+  color: #ffffff;
   font-size: 14px;
   line-height: 58px;
   padding: 0 15px;
@@ -2016,7 +2015,7 @@ html.menu-opened body {
   color: #333;
 }
 .page-title {
-  color: #333;
+  color: #ffffff;
   margin-bottom: 5px;
 }
 
@@ -3800,7 +3799,7 @@ div#DataTables_Table_0_length {
 @media only screen and (min-width: 992px) {
   #toggle_btn {
     align-items: center;
-    color: #333;
+    color: #ffffff;
     display: inline-flex;
     float: left;
     font-size: 30px;

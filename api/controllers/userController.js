@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import User from '../models/User.js';
 import bcrypt from 'bcrypt';
+import { userMailSendByAdmin } from '../utils/sendMail.js';
 
 /**
  * @DESC Get all users data
@@ -9,13 +10,17 @@ import bcrypt from 'bcrypt';
  * @access public
  */
 export const getAllUser = asyncHandler(async (req, res) => {
-  const users = await User.find();
+  const users = await User.find()
+    .populate({
+      path: 'role',
+      populate: {
+        path: 'permissions',
+        model: 'Permission'
+      }
+    })
+    .exec();
 
-  if (users.length === 0) {
-    return res.status(404).json({ message: 'User data not found' });
-  }
-
-  res.status(200).json(users);
+  res.status(200).json({ data: users, message: 'Fetch all user success.' });
 });
 
 /**
@@ -44,10 +49,10 @@ export const getSingleUser = asyncHandler(async (req, res) => {
  */
 export const createUser = asyncHandler(async (req, res) => {
   // get values
-  const { name, email, mobile, password, gender } = req.body;
+  const { name, email, mobile, password, gender, role } = req.body;
 
   // validations
-  if (!name || !email || !password) {
+  if (!name || !email || !password || !role) {
     return res.status(400).json({ message: 'All fields are required' });
   }
 
@@ -64,12 +69,16 @@ export const createUser = asyncHandler(async (req, res) => {
   const user = await User.create({
     name,
     email,
+    role,
     mobile,
     password: hashPass,
-    gender,
+    gender
   });
 
-  res.status(200).json(user);
+  // <!-- send user access to email -->
+  userMailSendByAdmin({ to: email, sub: 'Account access verify info for access Woolmart e-commerce  Dashboard panel', msg: `Your account login access is email : ${email} & password : ${password}` });
+
+  res.status(200).json({ data: user, message: `${user.name} user create success` });
 });
 
 /**
@@ -83,7 +92,7 @@ export const deleteUser = asyncHandler(async (req, res) => {
 
   const user = await User.findByIdAndDelete(id);
 
-  res.status(200).json(user);
+  res.status(200).json({ data: user, message: `${user.name} user delete successfully` });
 });
 
 /**
@@ -95,23 +104,64 @@ export const deleteUser = asyncHandler(async (req, res) => {
 export const updateUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
-  const { name, email, mobile, password, gender } = req.body;
+  const data = await User.findById(id);
 
-  if (!name || !email || !mobile || !password || !gender) {
-    return res.status(400).json({ message: 'All fields are required' });
+  if (!data) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+  let status = data.status;
+  if (req.body.status === true) {
+    status = true;
+  } else if (req.body.status === false) {
+    status = false;
+  }
+
+  // hash password
+  let hashPassword = data.password;
+  if (req.body?.password) {
+    hashPassword = await bcrypt.hash(req.body.password, 10);
   }
 
   const user = await User.findByIdAndUpdate(
     id,
     {
-      name,
-      email,
-      mobile,
-      password,
-      gender,
+      name: req?.body?.name ? req.body.name : data.name,
+      email: req?.body?.email ? req.body.email : data.email,
+      mobile: req?.body?.mobile ? req.body.mobile : data.mobile,
+      password: hashPassword,
+      gender: req?.body?.gender ? req.body.gender : data.gender,
+      role: req?.body?.role ? req.body.role : data.role,
+      status
     },
     { new: true }
   );
 
-  res.status(200).json(user);
+  res.status(200).json({ data: user, message: `User update success` });
+});
+
+/**
+ * @DESC Change password
+ * @ROUTE /api/v1/password/:id
+ * @method POST
+ * @access public
+ */
+export const changePass = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { oldPass, newPass } = req.body;
+
+  if (!oldPass || !newPass) return res.status(400).json({ message: `All fields are required!` });
+
+  const getUser = await User.findById(id);
+
+  if (!getUser) return res.status(404).json({ message: `Use not found!` });
+
+  const passCheck = await bcrypt.compare(oldPass, getUser.password);
+
+  if (!passCheck) return res.status(400).json({ message: `Password not match!` });
+
+  const hashPass = await bcrypt.hash(newPass, 10);
+  const changeData = await User.findByIdAndUpdate(id, { password: hashPass }, { new: true });
+
+  res.status(200).json({ data: changeData, message: 'Password change successful.' });
 });

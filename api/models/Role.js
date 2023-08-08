@@ -15,9 +15,9 @@ const roleSchema = mongoose.Schema(
       unique: true
     },
     permissions: {
-      type: Array,
-      trim: true,
-      default: []
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'Permission',
+      required: true
     },
     status: {
       type: Boolean,

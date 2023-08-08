@@ -20,7 +20,16 @@ const tokenVerify = (req, res, next) => {
         return res.status(400).json({ message: 'Invalid Token' });
       }
 
-      const me = await User.findOne({ email: decode.email }).select('-password');
+      const me = await User.findOne({ email: decode.email })
+        .select('-password')
+        .populate({
+          path: 'role',
+          populate: {
+            path: 'permissions',
+            model: 'Permission'
+          }
+        })
+        .exec();
 
       req.me = me;
 

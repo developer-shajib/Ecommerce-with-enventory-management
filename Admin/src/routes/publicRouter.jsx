@@ -1,6 +1,7 @@
 import Forgot from '../pages/auth/Forgot.jsx';
 import Login from '../pages/auth/Login.jsx';
 import Register from '../pages/auth/Register.jsx';
+import ChangePass from '../pages/auth/changePass.jsx';
 import PublicGard from './PublicGard.jsx';
 
 // Create Router
@@ -19,6 +20,10 @@ const publicRouter = [
       {
         path: '/forget',
         element: <Forgot />
+      },
+      {
+        path: '/forget/:token/:id',
+        element: <ChangePass />
       }
     ]
   }

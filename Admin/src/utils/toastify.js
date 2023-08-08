@@ -7,7 +7,7 @@ export const createToast = (msg = '', type = 'error') => {
     position: 'top-center',
     type,
     autoClose: 5000,
-    hideProgressBar: false,
+    hideProgressBar: true,
     closeOnClick: true,
     pauseOnHover: false,
     draggable: true,

@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import userRouter from './route/user.js';
 import authRouter from './route/auth.js';
 import permissionRoute from './route/permission.js';
+import roleRoute from './route/role.js';
 import { errorHandler } from './middlewares/errorhandler.js';
 import { mongoBDConnect } from './config/db.js';
 
@@ -34,6 +35,7 @@ app.use(express.static('public'));
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/permission', permissionRoute);
+app.use('/api/v1/role', roleRoute);
 
 // use error handler
 app.use(errorHandler);
